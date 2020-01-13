@@ -4,14 +4,13 @@
       <van-icon name="arrow-left" class="van-icons" @click.native="prev()" />
       <span>{{ header }}</span>
       <span class="sub" @click="showPopup()" v-if=" judge == 0 ">审批</span>
-      <span class="sub" @click="sign()" v-else-if=" judge == 1 ">签收</span>
     </div>
     <div class="tasks">
       <van-panel title="流程详情" status v-show="flowInfo != ''">
         <ul class="tasksInfo">
           <li>
             <span>申请人</span>
-            <span>{{flowInfo.activityName }}</span>
+            <span>{{flowInfo.startUser }}</span>
           </li>
           <li>
             <span>联系电话</span>
@@ -31,6 +30,7 @@
           </li>
         </ul>
       </van-panel>
+
       <van-panel title="申请表单" status v-show="taskInfo.length>0">
         <ul class="tasksInfo">
           <li v-for="(item,index) in taskInfo" :key="index">
@@ -40,6 +40,7 @@
         </ul>
       </van-panel>
     </div>
+
     <van-panel title="审批记录" status v-show="historyActivitys.length>0">
       <div class="historyActivitys">
         <div v-for="(item,index) in historyActivitys" :key="index">
@@ -68,8 +69,7 @@ export default {
       show: false,
       appProcessId: "",
       //流程实例ID
-      processInstanceId: "",
-      //processInstanceId: 5,
+      processInstanceId: this.$route.params.processInstanceId,
       //任务Id
       taskId: "",
       //taskId:207520,
@@ -92,11 +92,6 @@ export default {
   },
   created() {},
   beforeMount() {
-    this.appProcessId = JSON.parse(localStorage.getItem("appProcessId"));
-    var userId = JSON.parse(localStorage.getItem("userInfo"));
-    this.userId = userId.id;
-    this.processInstanceId = this.appProcessId.processInstanceId;
-    this.taskId = this.appProcessId.taskId;
     this.getbacklogInfo();
   },
   mounted() {},
@@ -110,58 +105,21 @@ export default {
         name: "ApprovalForm"
       });
     },
-    sign() {
-      Dialog.confirm({
-        title: "请确认签收"
-      })
-        .then(() => {
-          this.gitsign();
-        })
-        .catch(() => {
-          // on cancel
-        });
-    },
-    gitsign() {
-      var url = this.GLOBA.serverSrc + "appProcess/claimTask";
-      let param = new URLSearchParams();
-      param.append("taskId", this.taskId);
-      param.append("userId", this.userId);
-      // ;
-      this.$http
-        .post(url, param)
-        .then(res => {
-          if (res.data != null) {
-            if (res.data.status) {
-              Toast.success("签收成功");
-              this.$router.push("/actionrequired");
-            } else {
-              Toast.fail("签收失败");
-            }
-          } else {
-            Toast.fail("签收异常");
-          }
-        })
-        .catch(error => {});
-    },
+    
+    
     getbacklogInfo() {
       var url = this.GLOBA.serverSrc + "appProcess/loadHisProcessDetail";
       let param = new URLSearchParams();
       param.append("processInstanceId", this.processInstanceId);
-      // ;
       this.$http
         .post(url, param)
-        .then(res => {
-          //console.log(res.data);
-          this.header = res.data.process.processDefinitionName;
-          this.taskInfo = res.data.startFrom.formProperties;
-
-          this.flowInfo = res.data.startFrom;
-          this.taskInfoId = res.data.startFrom.variables;
-
-          this.historyActivitys = res.data.historyActivitys;
-
-          // this.taskId = res.data.historyActivitys.taskComments[0].taskId
-          // console.log("任务ID",this.taskId);
+      .then(res => {
+        console.log(res);
+          this.header = res.data.data.process.processDefinitionName;
+          this.taskInfo = res.data.data.startFrom.formProperties;
+          this.flowInfo = res.data.data.startFrom;
+          this.taskInfoId = res.data.data.startFrom.variables;
+          this.historyActivitys = res.data.data.historyActivitys;
           this.taskInfo.forEach((res, index) => {
             if (res.type.name == "date") {
               var time = this.taskInfoId[res.id];

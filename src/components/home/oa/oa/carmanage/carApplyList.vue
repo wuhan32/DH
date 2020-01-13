@@ -3,12 +3,11 @@
     <div class="home-head">
       <van-icon name="arrow-left" class="van-icons" @click="prev" />
       <span>车辆申请列表</span>
-      <router-link to="carfrom" class="carForm" tag="span">车辆申请</router-link>
     </div>
     <div class="body">
       
     <div class="takeFoodList">
-      <van-tabs @click="onClick" color="#025E80" class="tabsvant">
+      <van-tabs @click="onClick" color="#00A047" class="tabsvant">
         <van-tab title="全部"></van-tab>
         <van-tab title="未接"></van-tab>
         <van-tab title="已接"></van-tab>

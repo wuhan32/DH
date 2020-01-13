@@ -2,59 +2,60 @@
   <div class="page">
     <div class="home-head">
       <van-icon name="arrow-left" class="van-icons" @click="prev" />
-      <span>待办事务</span>
+      <span>待签流程</span>
     </div>
     <div class="body">
       <van-list v-model="loading" :finished="finished" :finished-text="daiban" @load="onLoad">
-        <div
-          class="list"
-          v-for="item in tasksList"
-          :key="item.taskId"
-          @click="gototasksInfo(item.processInstanceId,item.taskId,0)"
-        >
+        <div class="list" v-for="(item,index) in ClaimList" :key="index">
           <p class="title">{{ item.processDefinitionName }}</p>
           <van-row>
-            <van-col span="5" class="explain">环节名称：</van-col>
-            <van-col span="7" class="content">{{ item.taskName }}</van-col>
             <van-col span="5" class="explain">申请人：</van-col>
             <van-col span="7" class="content">{{ item.startUser }}</van-col>
           </van-row>
           <van-row>
+            <van-col span="5" class="explain">环节名称：</van-col>
+            <van-col span="7" class="content">{{ item.processDefinitionName }}</van-col>
+          </van-row>
+          <van-row v-if="item.endTime == ''">
+            <van-col span="5" class="explain">结束时间：</van-col>
+            <van-col span="19" class="content">{{ item.endTime | datefilter }}</van-col>
+          </van-row>
+          <van-row v-else>
             <van-col span="5" class="explain">开始时间：</van-col>
-            <van-col span="19" class="content">{{ item.startTime | formatDate}}</van-col>
+            <van-col span="19" class="content">{{ item.startTime | datefilter }}</van-col>
+            <p class="examine" @click="sign(item.taskId)">签收</p>
           </van-row>
         </div>
-        <div v-show="zanwu">暂无待办</div>
       </van-list>
     </div>
+    <div v-show="zanwu">暂无待签</div>
   </div>
 </template>
 <script>
-import { log } from "util";
-import { Notify, Toast } from "vant";
+import moment from "moment";
+import { Dialog } from "vant";
+import { Toast } from "vant";
+
 export default {
   data() {
     return {
       list: [],
+      daiban: "",
       loading: false,
       finished: false,
-      backlogLlist: "",
-      daiban: "",
       //页码
       page: 1,
       //条数
       rows: 10,
-      //用户ID
-      userId: "",
-      tasksList: [],
-      taskId: "",
-      zanwu: false
+      ClaimList: "",
+      zanwu: false,
+      taskId: ""
     };
   },
   created() {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     this.userId = userInfo.id;
-    this.getbacklogLlist();
+    this.getClaimList();
   },
   beforeMount() {},
   mounted() {},
@@ -71,68 +72,65 @@ export default {
         }
         // 加载状态结束
         this.loading = false;
+
         // 数据全部加载完成
         if (this.list.length >= 30) {
           this.finished = true;
         }
-      }, 300);
+      }, 500);
     },
-    gototasksInfo(processInstanceId, taskId, judge) {
-      //进入代办详情
-      var appProcessId = {
-        taskId: taskId,
-        processInstanceId: processInstanceId
-      };
-      localStorage.setItem("appProcessId", JSON.stringify(appProcessId));
-      this.$router.push({
-        name: "tasksInfo",
-        params: {
-          judge: judge
-        }
-      });
-    },
-    getbacklogLlist() {
-      var url = this.GLOBA.serverSrc + "/appProcess/loadNeedDealtTask";
+    getClaimList() {
+      var url = this.GLOBA.serverSrc + "appProcess/loadNeedClaimTask";
       let param = new URLSearchParams();
       param.append("page", this.page); //页码
       param.append("rows", this.rows); //条数
       param.append("userId", this.userId);
-      //  ;
       this.$http
         .post(url, param)
         .then(res => {
-          //console.log(res);
-          if (res.data.rows == null || res.data.rows == '') {
+          if (res.data.rows == null || res.data.rows == "") {
             this.zanwu = true;
           } else {
-            this.tasksList = res.data.rows;
-            
+            this.ClaimList = res.data.rows;
           }
         })
         .catch(error => {
-          this.daiban = "暂无代办";
-          if (error.message.indexOf("timeout") != -1) {
-            Toast.fail("请求超时!请更换网络!");
-          } else {
-          }
+          this.daiban = "暂无待签";
         });
+    },
+    gitsign(taskid) {
+      
+      var url = this.GLOBA.serverSrc + "appProcess/claimTask";
+      let param = new URLSearchParams();
+      param.append("taskId", taskid);
+      this.$http.post(url, param).then(res => {
+        console.log(res);
+        
+        if (res.data != null) {
+          if (res.data.status) {
+            Toast.success("签收成功");
+            this.$router.push("/actionrequired");
+          } else {
+            Toast.fail("签收失败");
+          }
+        } else {
+          Toast.fail("签收异常");
+        }
+      });
+    },
+    sign(taskid) {
+      Dialog.confirm({
+        title: "请确认签收"
+      })
+        .then(() => {
+          this.gitsign(taskid);
+        })
+        .catch(() => {});
     }
   },
   filters: {
-    formatDate: function(value) {
-      let date = new Date(value);
-      let y = date.getFullYear();
-      let MM = date.getMonth() + 1;
-      MM = MM < 10 ? "0" + MM : MM;
-      let d = date.getDate();
-      d = d < 10 ? "0" + d : d;
-      let h = date.getHours();
-      h = h < 10 ? "0" + h : h;
-      let m = date.getMinutes();
-      m = m < 10 ? "0" + m : m;
-      let s = date.getSeconds();
-      s = s < 10 ? "0" + s : s;
-      return y + "-" + MM + "-" + d + " " + h + ":" + m + ":" + s;
+    datefilter: function(value) {
+      return moment(value).format("YYYY-MM-DD HH:mm:ss");
     }
   }
 };
@@ -151,16 +149,17 @@ export default {
   }
   .body {
   }
-  .van-list {
-    padding-top: 5px;
-  }
   .list {
     background-color: #ffffff;
     padding: 16px;
     border-bottom: 5px solid #f5f6f7;
     line-height: 24px;
-    border-radius: 20px;
-    margin: 5px 2px 0px 2px ;
+    position: relative;
+    .examine {
+      position: absolute;
+      right: 25px;
+      bottom: 50px;
+    }
 
     .explain {
       color: #8c999f;
@@ -171,7 +170,7 @@ export default {
       font-size: 14px;
     }
     .title {
-      color: #025e80;
+      color: #000000;
       font-size: 15px;
     }
   }

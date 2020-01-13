@@ -88,7 +88,9 @@ export default {
             forbidClick: true
           });
         }
-      });
+      }).catch(error => {
+            //console.log(error);
+          });
     },
   }
 };

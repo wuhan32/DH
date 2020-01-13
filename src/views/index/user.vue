@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { Dialog,Toast } from "vant";
+import { Notify, Dialog,Toast } from "vant";
 export default {
   components: {},
   data() {
@@ -50,11 +50,51 @@ export default {
       // 此时可以自行将文件上传至服务器
       console.log("file:"+file.file,"type:"+file.file.type);
       if (file.file.type=='image/jpeg'||file.file.type=='image/png') {
-        this.avater=file.content;  
+        
+        this.updateAvater(file.file);
       }else{
         Toast('请上传 jpg/png 格式图片');
         return false;
       }
+    },
+    updateAvater(file){
+      const toast = Toast.loading({
+        mask: true,
+        message: "修改头像中...",
+        duration: 0
+      });
+      var url = this.GLOBA.serverSrc + "userinfo/updateUserheadPic";
+      console.log("url:",url);
+      let param = new FormData();
+      param.append("file",file);
+      let config={
+        headers:{
+            'Content-Type':'multipart/form-data'
+        }
+      }
+      this.$http
+        .post(url, param,config)
+        .then(response => {
+          toast.clear();
+          console.log("头像修改：", response);
+          if(response.data.status){
+            this.avater=response.data.data;  
+            this.userInfo.avater=this.avater;
+            let user=this.userInfo;
+            localStorage.setItem("userInfo", JSON.stringify(user));
+          }else{
+            Toast.fail("头像修改失败!请稍后修改!");
+          }
+        })
+        .catch(error => {
+          toast.clear();
+          console.log(error);
+          if (error.message.indexOf("timeout") != -1) {
+            Notify({ type: "warning", message: "请求超时!请更换网络!" });
+          } else {
+            Notify({ type: "danger", message: "连接异常!" });
+          }
+        });
     },
     handler({ BMap, map }) {
       this.center.lng = 0;

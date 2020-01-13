@@ -5,7 +5,7 @@
       <span>签到</span>
     </div>
     <div>
-      <van-tabs color="#025E80">
+      <van-tabs color="#00A047">
         <van-tab title="今天">
           <div>
             <van-cell-group>

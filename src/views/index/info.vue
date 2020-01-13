@@ -47,6 +47,7 @@ export default {
           .then(response => {
             console.log("详情：", response);
             this.info = response.data.data;
+            
             this.issuerdate = this.time(this.info.issuerdate);
             this.toast.clear();
           })
@@ -106,7 +107,8 @@ export default {
     font-size: 14px;
   }
   .infocontent {
-    width: 100%;
+    height: 500px;
+    overflow:auto;
     font-size: 18px;
   }
 }

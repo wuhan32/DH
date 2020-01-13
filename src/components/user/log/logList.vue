@@ -5,7 +5,7 @@
       <span>写日志</span>
     </div>
     <div>
-      <van-tabs @click="onClick" color="#025E80" class="tabsvant">
+      <van-tabs @click="onClick" color="#00A047" class="tabsvant">
         <van-tab title="我的日志"></van-tab>
         <van-tab title="查看日志"></van-tab>
       </van-tabs>

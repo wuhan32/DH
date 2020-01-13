@@ -4,13 +4,13 @@
     <!-- 轮播图 -->
     <van-swipe :autoplay="1000" indicator-color="white">
       <van-swipe-item>
-        <img src="@/assets/home/b09e106a6bbcb6c79a425102eb696a4.png" alt />
+        <img src="http://www.dahengzh.com:8080/oa/upload/2019-12-27/b09e106a6bbcb6c79a425102eb696a4.png" alt />
       </van-swipe-item>
       <van-swipe-item>
-        <img src="@/assets/home/MAIN201710252134000262017183848.jpg" alt />
+        <img src="http://www.dahengzh.com:8080/oa/upload/2019-12-27/MAIN201710252134000262017183848.jpg" alt />
       </van-swipe-item>
       <van-swipe-item>
-        <img src="@/assets/home/MAIN201710252135000095332786024.jpg" alt />
+        <img src="http://www.dahengzh.com:8080/oa/upload/2019-12-27/MAIN201710252135000095332786024.jpg" alt />
       </van-swipe-item>
     </van-swipe>
     <!-- 九宫格 -->
@@ -32,11 +32,11 @@
           <van-icon class="iconfont" class-prefix="icon" name="cangchujiaofei" />
           <p>物资仓储</p>
         </van-grid-item>
-        <van-grid-item to="/camera">
+        <van-grid-item @click="underdevelopment">
           <van-icon class="iconfont" class-prefix="icon" name="ziyuan " />
           <p>金融机构</p>
         </van-grid-item>
-        <van-grid-item @click="underdevelopment">
+        <van-grid-item to="/pmList">
           <van-icon class="iconfont" class-prefix="icon" name="project-o" />
           <p>项目管理</p>
         </van-grid-item>
@@ -70,7 +70,7 @@
       </van-grid-item>
       <van-grid-item to="/workorder">
         <van-icon class="iconfont" class-prefix="icon" name="order" />
-        <p>工单</p>
+        <p>流程入口</p>
       </van-grid-item>
     </van-grid>
     <div class="home-foot"></div>
@@ -100,7 +100,7 @@ export default {
     background-color: #fff;
     font-size: 14px;
     b {
-      color: #025e80;
+      color: #00A047;
       margin-left: 12px;
       font-size: 18px;
     }
@@ -134,7 +134,7 @@ export default {
 }
 .Event {
   .iconfont {
-    color: #025e80;
+    // color: #025e80;
     font-size: 25px;
   }
 }

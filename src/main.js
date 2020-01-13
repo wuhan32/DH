@@ -44,7 +44,7 @@ axios.interceptors.response.use(response => {
         })
         Toast('登录失效');
     }
-    return response.data;
+    return response;
 });
 Vue.prototype.$http = axios
 

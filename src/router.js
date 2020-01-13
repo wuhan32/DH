@@ -41,19 +41,34 @@ import Carfrom from './components/home/oa/oa/carmanage/carform' // 车辆申请�
 import Carassignfrom from './components/home/oa/oa/carmanage/carAssignform' // 车辆分派表单
 import Message from './components/home/oa/oa/message' // 信息发布
 
+//项目管理
+import pmList from './components/home/pm/pmList' //项目管理
+import initiateForm from './components/home/pm/initiateForm' //项目立项
+
+import incomeContractList from './components/home/pm/incomeContract/incomeContractList' //项目管理-收入合同
+import incomeContractForm from './components/home/pm/incomeContract/incomeContractForm' //项目管理-收入合同--收入合同
+import contractPaymentForm from './components/home/pm/incomeContract/contractPaymentForm' //项目管理-收入合同--合同收款
+import progressPaymentDeclarationForm from './components/home/pm/incomeContract/progressPaymentDeclarationForm' //项目管理-收入合同--进度款申报
+import completionAndSettlementForm from './components/home/pm/incomeContract/completionAndSettlementForm' //项目管理-收入合同--完工结算
+import changeOfIncomeContractForm from './components/home/pm/incomeContract/changeOfIncomeContractForm' //项目管理-收入合同--收入合同变更签证
+
+
 import Actionrequired from './components/home/oa/actionrequired/actionRequiredList' // 个人事务
-import TasksList from './components/home/oa/actionrequired/tasks/tasksList' // 待办事务--列表
-import TasksInfo from './components/home/oa/actionrequired/tasks/tasksInfo' // 待办事务--详情
-import ApprovalForm from './components/home/oa/actionrequired/tasks/approvalForm' //提交审批
+import TasksList from './components/home/oa/actionrequired/formList/tasksList' // 待办事务--列表
+import ApprovalForm from './components/home/oa/actionrequired/formList/approvalForm' //提交审批
+import HastasksList from './components/home/oa/actionrequired/formList/hastasksList' // 已办事务--列表
+import MydraftList from './components/home/oa/actionrequired/formList/mydraftList' // 我的草稿--列表
+import MyprocessList from './components/home/oa/actionrequired/formList/myprocessList' // 我的流程--列表
+import CommonForm from './components/home/oa/actionrequired/formInfo/commonForm/commonForm.vue' // 我的流程--列表
 
-import HastasksList from './components/home/oa/actionrequired/hastasks/hastasksList' // 已办事务--列表
-
-import MydraftList from './components/home/oa/actionrequired/mydraft/mydraftList' // 我的草稿--列表
-
-import MyprocessList from './components/home/oa/actionrequired/myprocess/myprocessList' // 我的流程--列表
+import TasksInfo from './components/home/oa/actionrequired/formInfo/tasksInfo' // 待办事务--详情
+import VehicleAf from './components/home/oa/actionrequired/formInfo/commonForm/vehicleAf.vue' //车辆申请详情
+import LeaveAf from './components/home/oa/actionrequired/formInfo/commonForm/leaveAf.vue' //请假申请详情
+import WorkAf from './components/home/oa/actionrequired/formInfo/commonForm/workAf.vue' //办公申请详情
 
 import Workorder from './components/home/oa/workorder/workorderList' // 工单
 import Askforleaveform from './components/home/oa/workorder/askForLeaveForm' // 请假表单
+import Purchaseapplyform from './components/home/oa/workorder/purchaseapplyForm' // 请假表单
 import Gooutform from './components/home/oa/workorder/gooutForm' // 外出表单
 import Sealform from './components/home/oa/workorder/sealForm' // 印章表单
 
@@ -62,6 +77,7 @@ import PersonalInfo from './components/mail/personalInfo.vue' // 个人信息
 
 
 
+//import Camera from './views/login/camera.vue'
 import { log } from 'util'
 
 Vue.use(Router)
@@ -229,6 +245,27 @@ const router = new Router({
             component: MyprocessList // 个人事务 -- 我的流程 --列表
         },
         {
+            path: '/commonForm',
+            name: 'commonForm',
+            component: CommonForm,
+            children: [{
+                    path: '/vehicleapplyrecord/processToForm',
+                    name: 'vehicleAf',
+                    component: VehicleAf
+                },
+                {
+                    path: '/vacationapply/processToForm',
+                    name: 'leaveAf',
+                    component: LeaveAf
+                },
+                {
+                    path: '/purchaseapply/processToForm',
+                    name: 'workAf',
+                    component: WorkAf
+                }
+            ]
+        },
+        {
             path: '/workorder',
             name: 'workorder',
             component: Workorder // 工单
@@ -237,6 +274,11 @@ const router = new Router({
             path: '/askforleaveform',
             name: 'askforleaveform',
             component: Askforleaveform // 工单-请假表单
+        },
+        {
+            path: '/purchaseapplyform',
+            name: 'purchaseapplyform',
+            component: Purchaseapplyform // 工单-办公用品表单
         },
         {
             path: '/gooutform',
@@ -248,6 +290,47 @@ const router = new Router({
             name: 'sealform',
             component: Sealform // 工单-印章表单
         },
+        //项目管理
+        {
+            path: '/pmList',
+            name: 'pmList',
+            component: pmList // 项目管理
+        },
+        {
+            path: '/initiateForm',
+            name: 'initiateForm',
+            component: initiateForm // 项目管理-项目立项
+        },
+        {
+            path: '/incomeContractList',
+            name: 'incomeContractList',
+            component: incomeContractList // 项目管理-收入合同
+        }, {
+            path: '/incomeContractForm',
+            name: 'incomeContractForm',
+            component: incomeContractForm // 项目管理-收入合同-收入合同
+        },
+        {
+            path: '/contractPaymentForm',
+            name: 'contractPaymentForm',
+            component: contractPaymentForm // 项目管理-收入合同-合同收款
+        },
+        {
+            path: '/progressPaymentDeclarationForm',
+            name: 'progressPaymentDeclarationForm',
+            component: progressPaymentDeclarationForm // 项目管理-收入合同-进度款申报
+        },
+        {
+            path: '/completionAndSettlementForm',
+            name: 'completionAndSettlementForm',
+            component: completionAndSettlementForm // 项目管理-收入合同-完工结算
+        },
+        {
+            path: '/changeOfIncomeContractForm',
+            name: 'changeOfIncomeContractForm',
+            component: changeOfIncomeContractForm // 项目管理-收入合同-收入合同变更签证
+        },
+
         // 取餐码
         {
             path: '/takeFood',
@@ -300,7 +383,11 @@ const router = new Router({
             path: '/personalInfo/:userId',
             name: 'PersonalInfo',
             component: PersonalInfo
-        }
+        },
+        // {
+        //     path: '/camera',
+        //     component: Camera
+        // }
     ],
     mode: 'history'
 

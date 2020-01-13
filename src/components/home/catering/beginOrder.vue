@@ -195,7 +195,7 @@ export default {
     top: 56px;
     z-index: 100;
     b {
-      color: #025e80;
+      color: #00A047;
       margin-left: 12px;
       font-size: 18px;
     }
@@ -226,7 +226,7 @@ export default {
       color: #ccc;
       font-size: 13px;
       .location-o {
-        color: #025e80;
+        color: #00A047;
       }
     }
     .dingwei {

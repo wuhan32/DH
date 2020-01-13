@@ -10,8 +10,8 @@
       <van-tabs
         v-model="orderStatus"
         animated
-        title-active-color="#025e80"
-        color="#025e80"
+        title-active-color="#00A047"
+        color="#00A047"
         line-height="2px"
         @click="statusClick"
       >
@@ -186,7 +186,7 @@ export default {
       height: 25px;
       width: 160px;
       padding-left: 20px;
-      border: 1px solid #000;
+      border: 1px solid #00A047;
       font-size: 12px;
       color: #000;
     }

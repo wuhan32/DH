@@ -36,8 +36,8 @@
         </div>
       </van-cell-group>
       <div class="orderFormInfoShop" v-show="orderinfo.status == 0 || orderinfo.status == 1">
-        <van-button type="danger" @click="OrderById">取消订单</van-button>
-        <van-button type="info" @click="payinfo">去支付</van-button>
+        <van-button class="qxdd" type="danger" @click="OrderById">取消订单</van-button>
+        <van-button class="qzf" type="info" @click="payinfo">去支付</van-button>
       </div>
     </div>
     <div class="orderFormlist-three">
@@ -129,7 +129,9 @@ export default {
       this.$http.post(url, param).then(res => {
         Toast.success("取消订单成功");
         this.$router.push("/orderFrom");
-      });
+      }).catch(error => {
+            //console.log(error);
+          });
     },
     countdown(reserve2) {
       const end = Date.parse(new Date(reserve2));
@@ -207,7 +209,7 @@ export default {
   }
   .orderFormInfoTime {
     line-height: 40px;
-    color: red;
+    color: #F27000;
     height: 50px;
     background-color: #fff;
     margin-bottom: 10px;
@@ -246,7 +248,7 @@ export default {
       font-size: 15px;
       line-height: 50px;
       span {
-        color: red;
+        color: #F27000;
       }
     }
   }
@@ -276,6 +278,13 @@ export default {
       width: 90px;
       line-height: 30px;
       margin: auto 10px;
+    }
+    .qzf{
+      background-color: #00A047;
+    }
+    .qxdd{
+      background-color: #F27000;
+      border: 1px solid #F27000;
     }
   }
   [class*="van-hairline"]::after {

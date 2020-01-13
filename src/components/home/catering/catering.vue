@@ -93,7 +93,9 @@ export default {
         if (response.data != null) {
           this.xiaoqiu = true;
         }
-      });
+      }).catch(error => {
+         
+        });
     }
   },
   created() {
@@ -146,7 +148,7 @@ export default {
     height: 40px;
     text-align: center;
     line-height: 40px;
-    background-color: #5a9cf8;
+    background-color: #00A047;
     border-radius: 40px;
     border: none;
     color: #fff;

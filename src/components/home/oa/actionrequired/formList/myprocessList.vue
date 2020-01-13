@@ -4,7 +4,7 @@
       <van-icon name="arrow-left" class="van-icons" @click="prev" />
       <span>我的流程</span>
     </div>
-    <van-tabs line-height="0" title-active-color="#E6B86D">
+    <van-tabs line-height="0" title-active-color="#025e80">
       <van-tab title="审批中">
         <div class="body">
           <van-list v-model="loading" :finished="finished" :finished-text="daiban" @load="onLoad">
@@ -12,7 +12,7 @@
               class="list"
               v-for="(item,index) in ProcesslistHis"
               :key="index"
-              @click="gototasksInfo(item.processInstanceId)"
+              @click="gototasksInfo(item.processInstanceId,item.fromType,item.startFromKey)"
               v-show="item.endTime == null"
             >
               <p class="title">{{ item.processDefinitionName }}</p>
@@ -30,7 +30,7 @@
                 <p class="examine">审批中</p>
               </van-row>
             </div>
-              <p v-if="endTime != null">暂无审批</p>
+            <div v-if="ProcesslistHis == ''">暂无流程</div>
           </van-list>
         </div>
       </van-tab>
@@ -41,8 +41,8 @@
               class="list"
               v-for="(item,index) in ProcesslistHis"
               :key="index"
-              @click="gototasksInfo(item.processInstanceId)"
               v-show="item.endTime != null"
+              @click="gototasksInfo(item.processInstanceId,item.fromType,item.startFromKey)"
             >
               <p class="title">{{ item.processDefinitionName }}</p>
               <van-row>
@@ -61,13 +61,13 @@
             </div>
           </van-list>
         </div>
+        <div v-if="ProcesslistHis == ''">暂无流程</div>
       </van-tab>
     </van-tabs>
   </div>
 </template>
 <script>
 import moment from "moment";
-import { log } from 'util';
 export default {
   data() {
     return {
@@ -80,8 +80,7 @@ export default {
       //条数
       rows: 10,
       ProcesslistHis: "",
-      zanwu: false,
-      endTime:""
+      zanwu: false
     };
   },
   created() {
@@ -111,17 +110,25 @@ export default {
         }
       }, 500);
     },
-    gototasksInfo(processInstanceId) {
-      var appProcessId = {
-        processInstanceId: processInstanceId
-      };
-      localStorage.setItem("appProcessId", JSON.stringify(appProcessId));
-      this.$router.push({
-        name: "tasksInfo"
-      });
+    gototasksInfo(processInstanceId, fromType, startFromKey) {
+      if (fromType == "external") {
+        this.$router.push({
+          path: startFromKey,
+          params: {
+            processInstanceId: processInstanceId
+          }
+        });
+      } else {
+        this.$router.push({
+          name: "tasksInfo",
+          params: {
+            processInstanceId: processInstanceId
+          }
+        });
+      }
     },
     getProcesslistHis() {
-      var url = this.GLOBA.serverSrc + "appProcess/loadMineDealtProcess";
+      var url = this.GLOBA.serverSrc + "appProcess/listLoadMineProcessHis";
       let param = new URLSearchParams();
       param.append("page", this.page); //页码
       param.append("rows", this.rows); //条数
@@ -129,16 +136,17 @@ export default {
       this.$http
         .post(url, param)
         .then(res => {
+          console.log("我的流程", res);
+
           if (res.data == null || res.data == "") {
             this.ProcesslistHis = [];
             this.zanwu = true;
           } else {
             this.ProcesslistHis = res.data.rows;
-            this.ProcesslistHis.forEach((element,index) => {
-             this.endTime = element.endTime;
-            });
+            //console.log(this.ProcesslistHis);
           }
         })
+        //console.log(this.ProcesslistHis);
         .catch(error => {
           this.daiban = "暂无流程";
         });
@@ -171,8 +179,6 @@ export default {
     border-bottom: 5px solid #f5f6f7;
     line-height: 24px;
     position: relative;
-    border-radius: 20px;
-    margin: 5px 2px 0px 2px;
     .examine {
       position: absolute;
       right: 25px;
@@ -188,7 +194,7 @@ export default {
       font-size: 14px;
     }
     .title {
-      color: #025e80;
+      color: #000000;
       font-size: 15px;
     }
   }

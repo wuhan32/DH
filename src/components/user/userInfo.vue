@@ -50,6 +50,7 @@ export default {
   mounted () {},
   beforeDestroy () {},
   methods: {
+    
     prev () {
       this.$router.go(-1) // 返回上一层
     }

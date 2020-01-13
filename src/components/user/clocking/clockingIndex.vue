@@ -1,7 +1,7 @@
 <template>
   <div>
     <router-view></router-view>
-    <van-tabbar v-model="active" active-color="#025E80">
+    <van-tabbar v-model="active" active-color="#00A047">
       <van-tabbar-item name="clock" @click="switchTo('/clock')">
         <van-icon name="edit" />
         <p>签到</p>

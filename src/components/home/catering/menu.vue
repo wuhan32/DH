@@ -5,7 +5,7 @@
       <van-icon name="arrow-left" @click="prev" class="arrow-left" />
       <span>菜单</span>
     </div>
-    <van-tabs v-model="active" class="taocan" color="#025e80" title-active-color="#025e80">
+    <van-tabs v-model="active" class="taocan" color="#00A047" title-active-color="#00A047">
       <van-icon class="iconfont richeng-left" class-prefix="icon" name="richeng" />
       <van-icon class="iconfont richeng-right" class-prefix="icon" name="richeng" />
       <!-- 套餐 -->
@@ -292,7 +292,14 @@ export default {
         } else {
           this.huncaiO = false;
         }
-      });
+      }).catch(error => {
+          
+          if (error.message.indexOf("timeout") != -1) {
+            Notify({ type: "warning", message: "请求超时!请更换网络!" });
+          } else {
+            Notify({ type: "danger", message: "连接异常!" });
+          }
+        });
     },
     getonesucailist() {
       //  获取该食堂所有单点 素菜
@@ -662,7 +669,7 @@ export default {
 
   .home-gongneng {
     font-size: 14px;
-    background-color: #5a9cf8;
+    background-color: #00A047;
     color: #fff;
     margin-top: 10px;
     span {
@@ -712,7 +719,7 @@ export default {
     width: 100%;
     position: fixed;
     bottom: 0;
-    border-top: 1px solid #2177c7;
+    border-top: 1px solid #00A047;
     display: flex;
     justify-content: space-between;
     background-color: #fff;
@@ -727,7 +734,7 @@ export default {
       width: 50px;
       height: 50px;
       border-radius: 50%;
-      background-color: #2177c7;
+      background-color: #00A047;
       position: relative;
       .van-icon {
         color: #fff;
@@ -739,7 +746,7 @@ export default {
     }
 
     button {
-      background-color: #2177c7;
+      background-color: #00A047;
       box-shadow: 0 1 1px pink;
       border: none;
       height: 50px;
@@ -776,7 +783,7 @@ export default {
       height: 40px;
       width: 100%;
       border: none;
-      background-color: #5a9cf8;
+      background-color: #00A047;
       color: #fff;
       font-size: 20px;
       position: absolute;
@@ -803,7 +810,7 @@ export default {
       width: 100%;
       height: 23px;
       padding: 15px 20px;
-      border-bottom: 1px solid #5a9cf8;
+      border-bottom: 1px solid #00A047;
       background-color: #fff;
       position: fixed;
       top: 158px;

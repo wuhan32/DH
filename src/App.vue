@@ -118,8 +118,11 @@ export default {
 .home-head {
   width: 100%;
   height: 56px;
-  background-color: #025e80;
+  // background-color:#EDEDED;
+  background-color:#00A047;
+  // 00A047
   line-height: 56px;
+  // color: #080808;
   color: #fff;
   font-size: 15px;
   padding-left: 35px;

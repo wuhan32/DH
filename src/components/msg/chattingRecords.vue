@@ -311,7 +311,9 @@ export default {
             forbidClick: true
           });
         }
-      });
+      }).catch(error => {
+            //console.log(error);
+          });
 
       let paramO = new URLSearchParams();
       paramO.append("id", this.userIdO);
@@ -324,7 +326,9 @@ export default {
             forbidClick: true
           });
         }
-      });
+      }).catch(error => {
+            //console.log(error);
+          });
     },
     initWebSocket() {
       //初始化weosocket

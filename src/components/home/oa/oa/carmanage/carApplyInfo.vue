@@ -137,14 +137,14 @@
         @click="updateExt1"
         type="primary"
         size="large"
-        color="#025E80"
+        color="#00A047"
       >取车</van-button>
       <van-button
         @click="returnCars"
         v-show="huanchebtn"
         type="primary"
         size="large"
-        color="#025E80"
+        color="#00A047"
       >还车</van-button>
     </div>
 

@@ -2,12 +2,11 @@
   <div class="page">
     <div class="home-head">
       <van-icon name="arrow-left" class="van-icons" @click="prev" />
-      <span>行政办公</span>
+      <span>项目管理</span>
     </div>
     <div>
-      <van-cell title="车辆申请" is-link to="/carapplylist"></van-cell>
-      <van-cell title="车辆分派" is-link to="/carassignform"></van-cell>
-      <van-cell title="信息发布" is-link to="/message"></van-cell>
+      <van-cell title="项目立项-立项信息登记" is-link to="/initiateForm"></van-cell>
+      <van-cell title="收入合同" is-link to="/incomeContractList"></van-cell>
     </div>
   </div>
 </template>

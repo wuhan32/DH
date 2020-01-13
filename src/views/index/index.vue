@@ -1,7 +1,7 @@
 <template>
   <div>
     <router-view></router-view>
-    <van-tabbar v-model="active" active-color	="#025E80">
+    <van-tabbar class="tabbar" v-model="active" active-color	="#00A047">
       <van-tabbar-item name="0" @click="switchTo('/home')" >
         <van-icon class="iconfont" class-prefix="icon" name="product-cate"/>
         <p>首页</p>
@@ -34,21 +34,35 @@ export default {
     }
   },
   created () {
-    var active = localStorage.getItem('active')
-    if (active != null) {
-      this.active = active
+    
+  },
+  beforeMount(){
+    var actives = localStorage.getItem('active');
+    if (actives != null||actives!="") {
+      this.active = actives;
     } else {
-      this.active = 0
+      this.active = 0;
     }
-   //console.log('created:', this.active)
   },
   methods: {
     switchTo (path) {
-      localStorage.setItem('active', this.active)
-     //console.log(this.active)
-      this.$router.replace(path)
+      localStorage.setItem('active', this.active);
+      this.$router.replace(path);
+    },
+    backButton () {//点击返回键时实现的业务逻辑
+    },
+  },
+   mounted(){
+    //监听返回键
+    if (window.history && window.history.pushState) {
+      history.pushState(null, null, document.URL);
+      window.addEventListener('popstate', this.backButton, false);//false阻止默认事件 
     }
-  }
+  },
+  destroyed () {
+    window.removeEventListener('popstate', this.backButton, false);//false阻止默认事件
+  },
+  
 }
 </script>
 
@@ -60,6 +74,8 @@ P {
 }
 .van-tabbar-item  {
   text-align: center;
+  background-color: #F7F7F7;
+  color: #080808;
 }
 .van-tabbar {
   touch-action: none;

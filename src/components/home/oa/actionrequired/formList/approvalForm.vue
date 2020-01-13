@@ -80,7 +80,9 @@ export default {
       param.append("taskId", this.taskId);
       this.$http.post(url, param).then(res => {
         this.approvalForm = res.data.taskFromProperties;
-      });
+      }).catch(error => {
+            //console.log(error);
+          });
     },
     prev() {
       this.$router.go(-2);

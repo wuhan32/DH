@@ -6,6 +6,7 @@
       <span class="sub" @click="getAssign">提交申请</span>
     </div>
     <div>
+      <router-view ref=""></router-view>
       <van-cell-group>
         <van-cell title="流程审批信息" class="title"/>
         <van-field v-model="processTitle" clearable disabled label="流程标题：" placeholder="请输入流程标题" />
@@ -218,7 +219,7 @@ export default {
       minDate: new Date(),
       maxDate: new Date(3019, 10, 1),
       //流程审批信息
-      processTitle:"车辆申请",
+      processTitle:this.$route.params.processTitle,
       processProposer:"",
       processOrg:"",
       processOrgText:"",
@@ -268,7 +269,7 @@ export default {
       //启动流程
       formId:"",//外置表单id
       variables:[],//Form表单参数
-      processDefinitionId:"vehicleaApply_process:27:225006",//流程定义id    (因为这里时车辆申请的流程)
+      processDefinitionId:this.$route.params.processDefinitionId,//流程定义id    (因为这里时车辆申请的流程)
       //vehicleaApply_process:27:225006  LZ
       //vehicleaApply_process:5:25004    XS
     };
@@ -398,7 +399,9 @@ export default {
             forbidClick: true
           });
         }
-      });
+      }).catch(error => {
+            //console.log(error);
+          });
     },
     getAssign() {
       if (!this.usevehpersonname) {

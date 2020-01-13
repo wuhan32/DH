@@ -75,8 +75,9 @@ export default {
                   });
                 });
               } else {
-                this.getInfo(loginfo.copyTo, function(res) {
-                  this.$set(loginfo, "copyToText", res);
+                this.getInfo(self.logInfo.copyTo, function(res) {
+                  console.log(res);
+                  self.$set(self.logInfo, "copyToText", res);
                 });
               }
             }

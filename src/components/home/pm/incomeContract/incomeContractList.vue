@@ -2,12 +2,14 @@
   <div class="page">
     <div class="home-head">
       <van-icon name="arrow-left" class="van-icons" @click="prev" />
-      <span>行政办公</span>
+      <span>收入合同</span>
     </div>
     <div>
-      <van-cell title="车辆申请" is-link to="/carapplylist"></van-cell>
-      <van-cell title="车辆分派" is-link to="/carassignform"></van-cell>
-      <van-cell title="信息发布" is-link to="/message"></van-cell>
+      <van-cell title="收入合同" is-link to="/incomeContractForm"></van-cell>
+      <van-cell title="合同收款" is-link to="/contractPaymentForm"></van-cell>
+      <van-cell title="进度款申报" is-link to="/progressPaymentDeclarationForm"></van-cell>
+      <van-cell title="完工结算" is-link to="/completionAndSettlementForm"></van-cell>
+      <van-cell title="收入合同变更签证" is-link to="/changeOfIncomeContractForm"></van-cell>
     </div>
   </div>
 </template>

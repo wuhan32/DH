@@ -26,7 +26,7 @@
       </div>
       <div class="payInfo-way">
         <p>就餐方式</p>
-        <van-tabs type="card" v-model="DiningWay" color="#2177c7" title-active-color="#fff">
+        <van-tabs type="card" v-model="DiningWay" color="#F27000" title-active-color="#fff">
           <van-tab title="店内就餐" :type="dljc" @click="dljction" />
           <van-tab title="打包带走" :type="dbdz" @click="dbdztion" />
         </van-tabs>
@@ -34,10 +34,10 @@
       <div class="payInfo-pay">
         <p>支付方式</p>
         <van-radio-group v-model="payment">
-          <van-radio name="0" class="iconfont-weixin">
+          <van-radio name="0" checked-color="#F27000" class="iconfont-weixin">
             <van-icon class="iconfont weixin" class-prefix="icon" name="weixin" />微信支付
           </van-radio>
-          <van-radio name="1" class="iconfont-zhifubao">
+          <van-radio name="1" checked-color="#F27000" class="iconfont-zhifubao">
             <van-icon class="iconfont zhifubao" class-prefix="icon" name="zhifubao" />支付宝支付
           </van-radio>
         </van-radio-group>
@@ -362,7 +362,7 @@ export default {
       font-size: 20px;
     }
     button {
-      background-color: #2177c7;
+      background-color: #00A047;
       color: #fff;
       border: none;
       width: 150px;

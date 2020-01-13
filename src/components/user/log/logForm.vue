@@ -49,7 +49,7 @@
         />
       </van-cell-group>
       <div class="bottom">
-        <van-button @click="saveForm" type="info" color="#025E80" size="large">提交</van-button>
+        <van-button @click="saveForm" type="info" color="#00A047" size="large">提交</van-button>
       </div>
       <!-- 选择日志接收人 -->
       <van-popup

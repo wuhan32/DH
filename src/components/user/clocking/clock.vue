@@ -29,10 +29,10 @@
           <bm-navigation anchor="BMAP_ANCHOR_TOP_RIGHT"></bm-navigation>
           <bm-circle
             :center="centerboss"
-            fillColor="#3B89A7"
+            fillColor="#00A047"
             content="打卡位置"
             radius="100"
-            stroke-color="#025E80"
+            stroke-color="#00A047"
             :stroke-opacity="0.2"
             :stroke-weight="6"
             :editing="false"
@@ -562,7 +562,7 @@ export default {
       height: 100px;
       width: 100px;
       border-radius: 50%;
-      background-color: #025e80;
+      background-color: #00A047;
     }
   }
 
@@ -572,7 +572,7 @@ export default {
     z-index: 2000;
   }
   .clockShow {
-    background-color: #5f97f6;
+    background-color: #00A047;
     width: 100%;
     height: 100%;
     color: #ffffff;
@@ -613,9 +613,9 @@ export default {
       left: 0px;
       .van-button {
         width: 100%;
-        background-color: #5f97f6;
+        background-color: #00A047;
         color: white;
-        border: 1px solid #5f97f6;
+        border: 1px solid #00A047;
       }
     }
     .van-icon-cross {
