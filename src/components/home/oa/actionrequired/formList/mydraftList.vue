@@ -28,7 +28,10 @@
         </div>
       </van-list>
     </div>
-    <div v-show="zanwu">暂无待签</div>
+    <div v-show="zanwu" class="zanwu">
+      <van-icon name="warning-o" />
+      <p>暂无流程</p>
+    </div>
   </div>
 </template>
 <script>
@@ -53,8 +56,6 @@ export default {
     };
   },
   created() {
-    let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    this.userId = userInfo.id;
     this.getClaimList();
   },
   beforeMount() {},
@@ -72,7 +73,6 @@ export default {
         }
         // 加载状态结束
         this.loading = false;
-
         // 数据全部加载完成
         if (this.list.length >= 30) {
           this.finished = true;
@@ -99,13 +99,10 @@ export default {
         });
     },
     gitsign(taskid) {
-      
       var url = this.GLOBA.serverSrc + "appProcess/claimTask";
       let param = new URLSearchParams();
       param.append("taskId", taskid);
       this.$http.post(url, param).then(res => {
-        console.log(res);
-        
         if (res.data != null) {
           if (res.data.status) {
             Toast.success("签收成功");
@@ -167,11 +164,22 @@ export default {
     }
     .content {
       color: #323233;
-      font-size: 14px;
+      font-size: 13px;
     }
     .title {
       color: #000000;
-      font-size: 15px;
+      font-size: 14px;
+    }
+  }
+  .zanwu {
+    padding-top: 200px;
+    background-color: #fff;
+    text-align: center;
+    font-size: 20px;
+    color: #8c8c8c;
+    p {
+      font-size: 16px;
+      margin: 0;
     }
   }
 }

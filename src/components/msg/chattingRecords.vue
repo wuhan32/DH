@@ -582,7 +582,7 @@ export default {
 }
 .xw-send-btn-text {
   padding: 4px 8px;
-  background-color: #025e80;
+  background-color: #00A03D;
   color: #fff;
   border-radius: 5px;
 }
@@ -648,7 +648,7 @@ export default {
 .xw-chat-customer .xw-chat-msg {
   float: right;
   text-align: left;
-  background: #025e80;
+  background: #00A03D;
   color: #fff;
   margin-right: 45px;
 }
@@ -855,7 +855,7 @@ export default {
   height: 0;
   width: 0;
   border: 10px solid transparent;
-  border-bottom: 10px solid #025e80;
+  border-bottom: 10px solid #00A03D;
   right: -10px;
   border-left-width: 9px;
 }

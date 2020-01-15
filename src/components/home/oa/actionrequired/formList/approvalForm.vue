@@ -37,7 +37,7 @@
         show-word-limit
       />
     </van-cell-group>
-    <van-button type="info" @click="completeTask">确认</van-button>
+    <van-button type="primary" @click="completeTask">确认</van-button>
   </div>
 </template>
 
@@ -48,11 +48,10 @@ export default {
   data() {
     return {
       //任务Id
-      taskId: "",
+      taskId: this.$route.query.taskId,
       //提交审批表单
       approvalForm: "",
       appProcessId: "",
-      taskId: "",
       remark: "",
       value: "",
       userId: "",
@@ -68,7 +67,6 @@ export default {
     this.appProcessId = JSON.parse(localStorage.getItem("appProcessId"));
     var userInfo = JSON.parse(localStorage.getItem("userInfo"));
     this.userId = userInfo.id;
-    this.taskId = this.appProcessId.taskId;
     this.token = localStorage.getItem("token");
     this.getapprovalForm();
   },
@@ -76,13 +74,14 @@ export default {
     getapprovalForm() {
       var url = this.GLOBA.serverSrc + "appProcess/loadTaskCompleteData";
       let param = new URLSearchParams();
-       ;
       param.append("taskId", this.taskId);
-      this.$http.post(url, param).then(res => {
-        this.approvalForm = res.data.taskFromProperties;
-      }).catch(error => {
-            //console.log(error);
-          });
+      this.$http
+        .post(url, param)
+        .then(res => {
+          this.approvalForm = res.data.taskFromProperties;
+        })
+        .catch(error => {
+        });
     },
     prev() {
       this.$router.go(-2);
@@ -92,19 +91,9 @@ export default {
         this.GLOBA.serverSrc +
         "appProcess/completeTask?taskId=" +
         this.taskId +
-        "&userId=" +
-        this.userId +
-        "&token=" +
-        this.token +
         "&comment=" +
         this.remark;
-      // let param = new URLSearchParams();
-      // param.append("taskId", this.taskId);
-      // param.append("userId", this.userId);
-      //  ;
-      // param.append("comment", this.remark);
-      // param.append("variables", );
-      // console.log(this.timeTip);
+
       if (this.remark == "") {
         Toast("审批意见不能为空");
       } else {
@@ -115,9 +104,8 @@ export default {
             }
           })
           .then(res => {
-            
             this.$router.go(-2);
-            Toast("审批成功");
+            Toast(res.data.msg);
           })
           .catch(error => {});
       }

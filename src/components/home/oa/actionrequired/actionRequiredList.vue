@@ -14,19 +14,19 @@
 </template>
 <script>
 export default {
-  data () {
-    return {}
+  data() {
+    return {};
   },
-  created () {},
-  beforeMount () {},
-  mounted () {},
-  beforeDestroy () {},
+  created() {},
+  beforeMount() {},
+  mounted() {},
+  beforeDestroy() {},
   methods: {
-    prev () {
-      this.$router.go(-1) // 返回上一层
+    prev() {
+      this.$router.go(-1); // 返回上一层
     }
   }
-}
+};
 </script>
 <style scoped lang="less">
 .actionrequiredlist {

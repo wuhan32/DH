@@ -32,7 +32,7 @@
                 v-model="checked"
                 active-value="org"
                 inactive-value="user"
-                inactive-color="#025E80"
+                inactive-color="#00A03D"
                 size="20px"
                 @input="onInput"
               />&emsp;机构

@@ -87,7 +87,7 @@
                 v-model="distancetype"
                 active-value="cp1555569228491"
                 inactive-value="cp1555569220483"
-                inactive-color="#025E80"
+                inactive-color="#00A03D"
                 size="20px"
               />&emsp;长途
             </div>

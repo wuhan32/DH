@@ -31,17 +31,8 @@
         </ul>
       </van-panel>
 
-      <van-panel title="申请表单" status v-show="taskInfo.length>0">
-        <ul class="tasksInfo">
-          <li v-for="(item,index) in taskInfo" :key="index">
-            <span>{{ item.name }}</span>
-            <span>{{ item.id}}</span>
-          </li>
-        </ul>
-      </van-panel>
+      <router-view />
     </div>
-
-  <router-view></router-view>
 
     <van-panel title="审批记录" status v-show="historyActivitys.length>0">
       <div class="historyActivitys">
@@ -71,10 +62,8 @@ export default {
       show: false,
       appProcessId: "",
       //流程实例ID
-      processInstanceId: this.$route.params.processInstanceId,
+      processInstanceId: this.$route.query.processInstanceId,
       //任务Id
-      taskId: "",
-      //taskId:207520,
       //表单
       taskInfo: "",
       //
@@ -88,11 +77,15 @@ export default {
       //审批表单
       approvalForm: "",
       //判断传值
-      judge: this.$route.params.judge,
-      userId: ""
+      judge: this.$route.query.judge,
+      taskId:this.$route.query.taskId,
+      userId: "",
     };
   },
-  created() {},
+  created() {
+    
+    
+  },
   beforeMount() {
     this.getbacklogInfo();
   },
@@ -104,17 +97,18 @@ export default {
     },
     showPopup() {
       this.$router.push({
-        name: "ApprovalForm"
+         path: '/approvalForm',
+          query: {
+            taskId:this.taskId
+          }
       });
     },
-
     getbacklogInfo() {
       var url = this.GLOBA.serverSrc + "appProcess/loadHisProcessDetail";
       let param = new URLSearchParams();
       param.append("processInstanceId", this.processInstanceId);
-      
       this.$http
-        .post(url, param) 
+        .post(url, param)
         .then(res => {
           this.header = res.data.data.process.processDefinitionName;
           this.taskInfo = res.data.data.startFrom.formProperties;
@@ -141,7 +135,8 @@ export default {
           });
         })
         .catch(error => {});
-    }
+    },
+
   },
   filters: {
     datefilter: function(value) {

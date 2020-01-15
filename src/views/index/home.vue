@@ -134,7 +134,7 @@ export default {
 }
 .Event {
   .iconfont {
-    // color: #025e80;
+    // color: #00A03D;
     font-size: 25px;
   }
 }

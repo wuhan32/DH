@@ -515,7 +515,7 @@ export default {
     width: 100%;
     height: 54px;
     color: #ffffff;
-    background-color: #025e80;
+    background-color: #00A03D;
     .backicon {
       color: #ffffff;
       font-size: 18px;

@@ -69,9 +69,9 @@ export default {
       show: false,
       appProcessId: "",
       //流程实例ID
-      processInstanceId: this.$route.params.processInstanceId,
+      processInstanceId: this.$route.query.processInstanceId,
       //任务Id
-      taskId: "",
+      taskId: this.$route.query.taskId,
       //taskId:207520,
       //表单
       taskInfo: "",
@@ -86,7 +86,7 @@ export default {
       //审批表单
       approvalForm: "",
       //判断传值
-      judge: this.$route.params.judge,
+      judge: this.$route.query.judge,
       userId: ""
     };
   },
@@ -102,19 +102,19 @@ export default {
     },
     showPopup() {
       this.$router.push({
-        name: "ApprovalForm"
+        path: "/approvalForm",
+        query: {
+          taskId: this.taskId
+        }
       });
     },
-    
-    
     getbacklogInfo() {
       var url = this.GLOBA.serverSrc + "appProcess/loadHisProcessDetail";
       let param = new URLSearchParams();
       param.append("processInstanceId", this.processInstanceId);
       this.$http
         .post(url, param)
-      .then(res => {
-        console.log(res);
+        .then(res => {
           this.header = res.data.data.process.processDefinitionName;
           this.taskInfo = res.data.data.startFrom.formProperties;
           this.flowInfo = res.data.data.startFrom;

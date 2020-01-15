@@ -10,7 +10,7 @@
           class="list"
           v-for="item in tasksList"
           :key="item.taskId"
-          @click="gototasksInfo(item.processInstanceId,item.fromType,item.startFromKey,0)"
+          @click="gototasksInfo(item.processInstanceId,item.fromType,item.startFromKey,item.businessId,item.taskId,0)"
         >
           <p class="title">{{ item.processDefinitionName }}</p>
           <van-row>
@@ -24,7 +24,10 @@
             <van-col span="19" class="content">{{ item.startTime | datefilter}}</van-col>
           </van-row>
         </div>
-        <div v-show="zanwu">暂无待办</div>
+        <div v-show="zanwu" class="zanwu">
+          <van-icon name="warning-o" />
+          <p>暂无待办</p>
+        </div>
       </van-list>
     </div>
   </div>
@@ -45,17 +48,13 @@ export default {
       //页码
       page: 1,
       //条数
-      rows: 10,
-      //用户ID
-      userId: "",
+      rows: 50,
       tasksList: [],
       taskId: "",
       zanwu: false
     };
   },
   created() {
-    let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    this.userId = userInfo.id;
     this.getbacklogLlist();
   },
   beforeMount() {},
@@ -79,21 +78,31 @@ export default {
         }
       }, 300);
     },
-    gototasksInfo(processInstanceId, fromType, startFromKey, judge) {
-      console.log(processInstanceId);
+    gototasksInfo(
+      processInstanceId,
+      fromType,
+      startFromKey,
+      businessId,
+      taskId,
+      judge
+    ) {
       if (fromType == "external") {
         this.$router.push({
           path: startFromKey,
-          params: {
+          query: {
             processInstanceId: processInstanceId,
-            judge:judge
+            businessId: businessId,
+            judge: judge,
+            taskId: taskId
           }
         });
       } else {
         this.$router.push({
           name: "tasksInfo",
-          params: {
-            processInstanceId: processInstanceId
+          query: {
+            processInstanceId: processInstanceId,
+            judge: judge,
+            taskId: taskId
           }
         });
       }
@@ -111,7 +120,6 @@ export default {
             this.zanwu = true;
           } else {
             this.tasksList = res.data.rows;
-            console.log(this.tasksList);
           }
         })
         .catch(error => {
@@ -156,11 +164,22 @@ export default {
     }
     .content {
       color: #323233;
-      font-size: 14px;
+      font-size: 13px;
     }
     .title {
       color: #000000;
-      font-size: 15px;
+      font-size: 14px;
+    }
+  }
+  .zanwu {
+    padding-top: 200px;
+    background-color: #fff;
+    text-align: center;
+    font-size: 20px;
+    color: #8c8c8c;
+    p {
+      font-size: 16px;
+      margin: 0;
     }
   }
 }
