@@ -14,7 +14,7 @@
     "font-awesome": "^4.7.0",
     "js-md5": "^0.7.3",
     "lib-flexible": "^0.3.2",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "postcss-loader": "^3.0.0",
     "postcss-px2rem-exclude": "0.0.6",
     "px2rem-loader": "^0.1.9",
